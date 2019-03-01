@@ -1,0 +1,21 @@
+version: '2.1'
+
+services:
+
+  ots-explorer:
+    image: ots-explorer:latest
+    expose:
+      - "80"
+    labels:
+      - "traefik.docker.network=otswebnet"
+      - "traefik.enable=true"
+      - "traefik.basic.frontend.rule=Host:<DOMAIN_LE>"
+      - "traefik.basic.port=80"
+      - "traefik.basic.protocol=http"
+    restart: always
+    networks:
+      - otswebnet
+
+networks:
+  otswebnet:
+    external: true

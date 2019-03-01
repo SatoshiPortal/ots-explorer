@@ -22,8 +22,8 @@ git clone https://github.com/satoshiportal/ots-explorer.git
 cd ots-explorer/
 docker build -t ots-explorer .
 docker network create --driver=overlay --attachable --opt encrypted otswebnet
-sed 's/<EMAIL_LE>/letsencrypt@yourdomain.com/g' docker-compose-lecompanion.yml docker-compose-traefik.yml traefik/traefik.toml
-sed 's/<DOMAIN_LE>/ots-explorer.yourdomain.com/g' docker-compose-lecompanion.yml docker-compose-traefik.yml traefik/traefik.toml
+sed -i 's/<EMAIL_LE>/letsencrypt@yourdomain.com/g' docker-compose-lecompanion.yml docker-compose-traefik.yml traefik/traefik.toml
+sed -i 's/<DOMAIN_LE>/ots-explorer.yourdomain.com/g' docker-compose-lecompanion.yml docker-compose-traefik.yml traefik/traefik.toml
 ```
 
 ## Run using TRAEFIK
@@ -40,6 +40,7 @@ docker-compose -f docker-compose-traefik.yml up -d
 ## Run using Let's Encrypt Companion
 
 ```
+docker swarm init
 echo "http2_max_field_size 16k;" > vhost.d/ots-explorer.yourdomain.com
 docker stack deploy -c docker-compose-lecompanion.yml ots-explorer
 ```

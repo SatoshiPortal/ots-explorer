@@ -26,7 +26,14 @@ sed -i 's/<EMAIL_LE>/letsencrypt@yourdomain.com/g' docker-compose-lecompanion.ym
 sed -i 's/<DOMAIN_LE>/ots-explorer.yourdomain.com/g' docker-compose-lecompanion.yml docker-compose-traefik.yml traefik/traefik.toml
 ```
 
-## Run using TRAEFIK
+## Run using Let's Encrypt Companion
+
+```
+docker swarm init
+docker stack deploy -c docker-compose-lecompanion.yml ots-explorer
+```
+
+## Run using Traefik
 
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -35,12 +42,4 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 docker-compose -f traefik/docker-compose.yml up -d
 docker-compose -f docker-compose-traefik.yml up -d
-```
-
-## Run using Let's Encrypt Companion
-
-```
-docker swarm init
-echo "http2_max_field_size 16k;" > vhost.d/ots-explorer.yourdomain.com
-docker stack deploy -c docker-compose-lecompanion.yml ots-explorer
 ```
